@@ -10,9 +10,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public abstract class AbstractAuditingEntity<T> {
-
-    public abstract T getId();
+public abstract class AbstractAuditingEntity {
 
     @CreatedDate
     private Instant createdDate;

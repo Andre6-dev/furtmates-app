@@ -1,5 +1,7 @@
 package io.devandre.furtmates.users.boundary.controller;
 
+import io.devandre.furtmates.shared.utils.ApiResponse;
+import io.devandre.furtmates.shared.utils.ResponseController;
 import io.devandre.furtmates.users.control.service.RoleService;
 import io.devandre.furtmates.users.entity.Role;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/roles")
-public class RoleController {
+public class RoleController extends ResponseController {
 
     private final RoleService roleService;
 
@@ -23,24 +25,24 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> findRoleById(@PathVariable Long id) {
-        return ResponseEntity.ok(roleService.findRoleById(id));
+    public ResponseEntity<ApiResponse<Role>> findRoleById(@PathVariable Long id) {
+        return ok(roleService.findRoleById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Role>> findAllRoles() {
-        return ResponseEntity.ok(roleService.findAllRoles());
+    public ResponseEntity<ApiResponse<List<Role>>> findAllRoles() {
+        return list(roleService.findAllRoles());
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveRole(Role role) {
+    public ResponseEntity<ApiResponse<Void>> saveRole(Role role) {
         roleService.saveRole(role);
-        return ResponseEntity.ok().build();
+        return created();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRoleById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteRoleById(@PathVariable Long id) {
         roleService.deleteRoleById(id);
-        return ResponseEntity.ok().build();
+        return deleted();
     }
 }

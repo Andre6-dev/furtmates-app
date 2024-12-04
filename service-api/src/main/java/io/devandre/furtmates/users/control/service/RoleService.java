@@ -1,5 +1,6 @@
 package io.devandre.furtmates.users.control.service;
 
+import io.devandre.furtmates.shared.exception.ZeroElementsException;
 import io.devandre.furtmates.users.control.repository.RoleRepository;
 import io.devandre.furtmates.users.entity.Role;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,13 @@ public class RoleService {
 
     public List<Role> findAllRoles() {
         log.info("Finding all roles");
-        return roleRepository.findAllRoles();
+        // validate if the list is empty
+        List<Role> roles = roleRepository.findAllRoles();
+        if (roles.isEmpty()) {
+            log.error("No roles found");
+            throw new ZeroElementsException("No roles found");
+        }
+        return roles;
     }
 
     public void deleteRoleById(Long id) {

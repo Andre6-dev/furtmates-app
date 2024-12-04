@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table("roles")
+@Table(schema = "furtmates_schema", name = "roles")
 public class Role {
 
     @Id
@@ -21,4 +21,5 @@ public class Role {
         this.id = id;
         this.name = name;
     }
+
 }
