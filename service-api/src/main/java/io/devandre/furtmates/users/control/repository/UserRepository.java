@@ -14,9 +14,24 @@ public interface UserRepository {
 
     UserResponse getUserByPublicId(UUID publicId);
 
+    Long getPublicUserId(UUID publicId);
+
     void updateUserEnabled(UUID publicId, boolean isEnabled);
 
-    void updateUserProfile(UUID publicId, String firstName, String lastName, String username, String email, String phoneNumber, String address, String documentNumber, Integer roleId, String avatarUrl, Integer age, String genre, Boolean isAdopter, String bio);
+    void updateUserProfile(UUID publicId,
+                           String firstName,
+                           String lastName,
+                           String username,
+                           String email,
+                           String phoneNumber,
+                           String address,
+                           String documentNumber,
+                           Integer roleId,
+                           String avatarUrl,
+                           Integer age,
+                           String genre,
+                           Boolean isAdopter,
+                           String bio);
 
     void deleteUserByPublicId(UUID publicId);
 

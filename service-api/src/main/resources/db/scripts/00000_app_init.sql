@@ -18,8 +18,6 @@ VALUES ('ROLE_ADMIN'),
        ('ROLE_SHELTER'),
        ('ROLE_ADOPTER');
 
-CREATE TYPE GENRE AS ENUM ('MALE', 'FEMALE', 'OTHER');
-
 -- Users Table
 CREATE TABLE users
 (
@@ -36,7 +34,7 @@ CREATE TABLE users
     role_id         INT                 NOT NULL,
     avatar_url      VARCHAR(255),
     age             INT,
-    genre           GENRE               NOT NULL,
+    genre           VARCHAR(50)         NOT NULL,
     is_enabled      BOOLEAN             NOT NULL,
     is_adopter      BOOLEAN             NOT NULL,
     bio             TEXT,
@@ -97,29 +95,26 @@ CREATE TABLE shelters
     updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TYPE PET_AGES AS ENUM ('BABY', 'YOUNG', 'ADULT', 'SENIOR');
-CREATE TYPE ADOPTION_STATUS AS ENUM ('ADOPTED', 'AVAILABLE', 'PENDING', 'SUSPENDED');
-
 -- Pets Table
 CREATE TABLE pets
 (
     id              SERIAL PRIMARY KEY,
-    name            VARCHAR(255)    NOT NULL,
-    species_id      INT             NOT NULL,
-    breed_id        INT             NOT NULL,
-    age             PET_AGES        NOT NULL,
-    genre           GENRE           NOT NULL,
-    weight          DECIMAL(5, 2)   NOT NULL,
+    name            VARCHAR(255)  NOT NULL,
+    species_id      INT           NOT NULL,
+    breed_id        INT           NOT NULL,
+    age             VARCHAR(50)   NOT NULL,
+    genre           VARCHAR(50)   NOT NULL,
+    weight          DECIMAL(5, 2) NOT NULL,
     description     TEXT,
-    size            VARCHAR(50)     NOT NULL,
-    color           VARCHAR(50)     NOT NULL,
-    health_status   VARCHAR(50)     NOT NULL,
+    size            VARCHAR(50)   NOT NULL,
+    color           VARCHAR(50)   NOT NULL,
+    health_status   VARCHAR(50)   NOT NULL,
     characteristics TEXT,
-    adoption_status ADOPTION_STATUS NOT NULL,
-    shelter_id      INT             NOT NULL,
-    arrival_date    DATE            NOT NULL,
+    adoption_status VARCHAR(50)   NOT NULL,
+    shelter_id      INT           NOT NULL,
+    arrival_date    DATE          NOT NULL,
     good_with       VARCHAR(50),
-    is_spayed       BOOLEAN         NOT NULL,
+    is_spayed       BOOLEAN       NOT NULL,
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_by      INT,
@@ -144,7 +139,7 @@ CREATE TABLE adoptions
     pet_id        INT             NOT NULL,
     adopter_id    INT             NOT NULL,
     adoption_date DATE            NOT NULL,
-    status        ADOPTION_STATUS NOT NULL,
+    status        VARCHAR(50) NOT NULL,
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (pet_id) REFERENCES pets (id),
@@ -162,15 +157,13 @@ CREATE TABLE users_favorites
     FOREIGN KEY (pet_id) REFERENCES pets (id)
 );
 
-CREATE TYPE APPOINTMENT_STATUS AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED');
-
 CREATE TABLE appointments
 (
     id               SERIAL PRIMARY KEY,
-    user_id          INT                NOT NULL,
-    pet_id           INT                NOT NULL,
-    appointment_date TIMESTAMP          NOT NULL,
-    status           APPOINTMENT_STATUS NOT NULL,
+    user_id          INT         NOT NULL,
+    pet_id           INT         NOT NULL,
+    appointment_date TIMESTAMP   NOT NULL,
+    status           VARCHAR(50) NOT NULL,
     created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by       INT,
@@ -178,19 +171,12 @@ CREATE TABLE appointments
     FOREIGN KEY (pet_id) REFERENCES pets (id)
 );
 
-CREATE TYPE NOTIFICATION_TYPE AS ENUM (
-    'APPOINTMENT',
-    'ADOPTION_STATUS',
-    'ORDER',
-    'PET_AVAILABILITY'
-    );
-
 CREATE TABLE notifications
 (
     notification_id   SERIAL PRIMARY KEY,
-    user_id           BIGINT            NOT NULL,
-    type              NOTIFICATION_TYPE NOT NULL,
-    message           TEXT              NOT NULL,
+    user_id           BIGINT      NOT NULL,
+    type              VARCHAR(50) NOT NULL,
+    message           TEXT        NOT NULL,
     is_read           BOOLEAN   DEFAULT FALSE,
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     related_entity_id BIGINT,

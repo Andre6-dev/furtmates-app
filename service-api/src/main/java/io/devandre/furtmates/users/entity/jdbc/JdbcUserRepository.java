@@ -18,14 +18,17 @@ public interface JdbcUserRepository extends ListCrudRepository<User, Long>, Pagi
 
     Optional<User> findByEmail(String email);
 
+    @Query("SELECT id FROM furtmates_schema.users WHERE public_id = :publicId")
+    Long getPublicUserId(UUID publicId);
+
     boolean existsByEmail(String email);
 
     @Modifying
-    @Query("UPDATE users SET is_enabled = :isEnabled WHERE public_id = :publicId")
+    @Query("UPDATE furtmates_schema.users SET is_enabled = :isEnabled WHERE public_id = :publicId")
     void updateEnabled(UUID publicId, boolean isEnabled);
 
     @Modifying
-    @Query("UPDATE users SET first_name = :firstName, last_name = :lastName, username = :username, email = :email, phone_number = :phoneNumber, address = :address, document_number = :documentNumber, role_id = :roleId, avatar_url = :avatarUrl, age = :age, genre = :genre, is_adopter = :isAdopter, bio = :bio WHERE public_id = :publicId")
+    @Query("UPDATE furtmates_schema.users SET first_name = :firstName, last_name = :lastName, username = :username, email = :email, phone_number = :phoneNumber, address = :address, document_number = :documentNumber, role_id = :roleId, avatar_url = :avatarUrl, age = :age, genre = :genre, is_adopter = :isAdopter, bio = :bio WHERE public_id = :publicId")
     void updateProfile(@Param(value = "publicId") UUID publicId,
                           @Param(value = "firstName") String firstName,
                           @Param(value = "lastName") String lastName,

@@ -4,4 +4,5 @@ public enum UserGenre {
     MALE,
     FEMALE,
     OTHER
+
 }

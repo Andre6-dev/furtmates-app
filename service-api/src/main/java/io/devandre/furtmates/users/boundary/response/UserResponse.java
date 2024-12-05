@@ -1,6 +1,5 @@
 package io.devandre.furtmates.users.boundary.response;
 
-import io.devandre.furtmates.users.entity.enums.UserGenre;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -37,7 +36,7 @@ public class UserResponse {
     private Integer age;
 
     @Schema(description = "User's genre")
-    private UserGenre genre;
+    private String genre;
 
     @Schema(description = "Whether user is enabled", example = "true")
     private Boolean isEnabled;

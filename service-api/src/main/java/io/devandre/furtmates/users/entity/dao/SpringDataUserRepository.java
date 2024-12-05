@@ -43,14 +43,33 @@ public class SpringDataUserRepository implements UserRepository {
     }
 
     @Override
+    public Long getPublicUserId(UUID publicId) {
+        return jdbcUserRepository.getPublicUserId(publicId);
+    }
+
+    @Override
     public void updateUserEnabled(UUID publicId, boolean isEnabled) {
         jdbcUserRepository.updateEnabled(publicId, isEnabled);
     }
 
     @Override
-    public void updateUserProfile(UUID publicId, String firstName, String lastName, String username, String email, String phoneNumber, String address, String documentNumber, Integer roleId, String avatarUrl, Integer age, String genre, Boolean isAdopter, String bio) {
+    public void updateUserProfile(UUID publicId,
+                                  String firstName,
+                                  String lastName,
+                                  String username,
+                                  String email,
+                                  String phoneNumber,
+                                  String address,
+                                  String documentNumber,
+                                  Integer roleId,
+                                  String avatarUrl,
+                                  Integer age,
+                                  String genre,
+                                  Boolean isAdopter,
+                                  String bio) {
         jdbcUserRepository.updateProfile(publicId, firstName, lastName, username, email, phoneNumber, address, documentNumber, roleId, avatarUrl, age, genre, isAdopter, bio);
     }
+
 
     @Override
     public void deleteUserByPublicId(UUID publicId) {
