@@ -14,33 +14,34 @@ CREATE TABLE roles
 
 -- Insert default roles
 INSERT INTO roles (name)
-VALUES
-    ('ROLE_ADMIN'),
-    ('ROLE_SHELTER'),
-    ('ROLE_ADOPTER');
+VALUES ('ROLE_ADMIN'),
+       ('ROLE_SHELTER'),
+       ('ROLE_ADOPTER');
 
 CREATE TYPE GENRE AS ENUM ('MALE', 'FEMALE', 'OTHER');
 
 -- Users Table
 CREATE TABLE users
 (
-    id            SERIAL PRIMARY KEY,
-    public_id     UUID NOT NULL,
-    first_name    VARCHAR(255)        NOT NULL,
-    last_name     VARCHAR(255)        NOT NULL,
-    username      VARCHAR(255)        NOT NULL,
-    email         VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT                NOT NULL,
-    phone_number  VARCHAR(20),
-    address       TEXT,
-    role_id       INT                 NOT NULL,
-    avatar_url    VARCHAR(255),
-    age           INT,
-    job           VARCHAR(255),
-    genre         GENRE               NOT NULL,
-    is_enabled    BOOLEAN             NOT NULL,
-    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id              SERIAL PRIMARY KEY,
+    public_id       UUID                NOT NULL,
+    first_name      VARCHAR(255)        NOT NULL,
+    last_name       VARCHAR(255)        NOT NULL,
+    username        VARCHAR(255)        NOT NULL,
+    email           VARCHAR(255) UNIQUE NOT NULL,
+    password_hash   TEXT                NOT NULL,
+    phone_number    VARCHAR(20),
+    address         TEXT,
+    document_number VARCHAR(20) UNIQUE  NOT NULL,
+    role_id         INT                 NOT NULL,
+    avatar_url      VARCHAR(255),
+    age             INT,
+    genre           GENRE               NOT NULL,
+    is_enabled      BOOLEAN             NOT NULL,
+    is_adopter      BOOLEAN             NOT NULL,
+    bio             TEXT,
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
@@ -168,7 +169,7 @@ CREATE TABLE appointments
     id               SERIAL PRIMARY KEY,
     user_id          INT                NOT NULL,
     pet_id           INT                NOT NULL,
-    appointment_date TIMESTAMP               NOT NULL,
+    appointment_date TIMESTAMP          NOT NULL,
     status           APPOINTMENT_STATUS NOT NULL,
     created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

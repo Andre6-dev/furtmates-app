@@ -25,16 +25,18 @@ public class User extends AbstractAuditingEntity {
     private String passwordHash;
     private String phoneNumber;
     private String address;
+    private String documentNumber;
     private Integer roleId;
     private String avatarUrl;
     private Integer age;
-    private String job;
     private UserGenre genre;
     private Boolean isEnabled;
+    private Boolean isAdopter;
+    private String bio;
 
     public User() {}
 
-    public User(Long id, UUID publicId, String firstName, String lastName, String username, String email, String passwordHash, String phoneNumber, String address, Integer roleId, String avatarUrl, Integer age, String job, UserGenre genre, Boolean isEnabled) {
+    public User(Long id, UUID publicId, String firstName, String lastName, String username, String email, String passwordHash, String phoneNumber, String address, String documentNumber, Integer roleId, String avatarUrl, Integer age, UserGenre genre, Boolean isEnabled, Boolean isAdopter, String bio) {
         this.id = id;
         this.publicId = publicId;
         this.firstName = firstName;
@@ -44,11 +46,13 @@ public class User extends AbstractAuditingEntity {
         this.passwordHash = passwordHash;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.documentNumber = documentNumber;
         this.roleId = roleId;
         this.avatarUrl = avatarUrl;
         this.age = age;
-        this.job = job;
         this.genre = genre;
         this.isEnabled = isEnabled;
+        this.isAdopter = isAdopter;
+        this.bio = bio;
     }
 }
