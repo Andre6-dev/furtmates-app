@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Table("users")
+@Table(schema = "furtmates_schema", name = "users")
 public class User extends AbstractAuditingEntity {
 
     @Id
@@ -36,8 +36,7 @@ public class User extends AbstractAuditingEntity {
 
     public User() {}
 
-    public User(Long id, UUID publicId, String firstName, String lastName, String username, String email, String passwordHash, String phoneNumber, String address, String documentNumber, Integer roleId, String avatarUrl, Integer age, UserGenre genre, Boolean isEnabled, Boolean isAdopter, String bio) {
-        this.id = id;
+    public User(UUID publicId, String firstName, String lastName, String username, String email, String passwordHash, String phoneNumber, String address, String documentNumber, Integer roleId, String avatarUrl, Integer age, UserGenre genre, Boolean isEnabled, Boolean isAdopter, String bio) {
         this.publicId = publicId;
         this.firstName = firstName;
         this.lastName = lastName;

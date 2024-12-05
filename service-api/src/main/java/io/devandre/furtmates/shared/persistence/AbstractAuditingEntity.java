@@ -13,8 +13,8 @@ import java.time.Instant;
 public abstract class AbstractAuditingEntity {
 
     @CreatedDate
-    private Instant createdDate;
+    private Instant createdAt;
 
     @LastModifiedDate
-    private Instant lastModifiedDate;
+    private Instant updatedAt;
 }
