@@ -1,7 +1,7 @@
 logging:
   level:
     ROOT: INFO
-    org.springframework.jdbc.core: INFO
+    org.springframework.jdbc.core: TRACE
     io.devandre.furtmates: DEBUG
 
 spring:
@@ -9,7 +9,7 @@ spring:
     resources:
       add-mappings: false
   application:
-    name: Furtmates Backend
+    name: Furtmates-Backend
   threads:
     virtual:
       enabled: true
@@ -49,3 +49,14 @@ spring:
       enabled: true
       max-file-size: 100MB
       max-request-size: 100MB
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    version: 1.0.0
+    operations-sorter: method
+    tags-sorter: alpha
+    default-model-expand-depth: -1
+  show-actuator: true
