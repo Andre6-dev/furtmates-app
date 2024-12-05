@@ -10,6 +10,8 @@ public interface RoleRepository {
 
     boolean existsRoleById(Long id);
 
+    boolean existsRoleByName(String name);
+
     Role findRoleById(Long id);
 
     List<Role> findAllRoles();

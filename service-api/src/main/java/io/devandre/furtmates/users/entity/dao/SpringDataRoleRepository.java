@@ -28,6 +28,11 @@ public class SpringDataRoleRepository implements RoleRepository {
     }
 
     @Override
+    public boolean existsRoleByName(String name) {
+        return jdbcRoleRepository.existsByName(name);
+    }
+
+    @Override
     public Role findRoleById(Long id) {
         return jdbcRoleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
     }

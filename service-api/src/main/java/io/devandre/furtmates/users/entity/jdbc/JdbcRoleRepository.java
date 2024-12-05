@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface JdbcRoleRepository extends ListCrudRepository<Role, Long> {
 
     Optional<Role> findByName(String name);
+
+    boolean existsByName(String name);
 }

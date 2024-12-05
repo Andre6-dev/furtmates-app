@@ -1,6 +1,7 @@
 package io.devandre.furtmates.users.control.service;
 
 import io.devandre.furtmates.shared.exception.ZeroElementsException;
+import io.devandre.furtmates.users.boundary.request.RoleRequest;
 import io.devandre.furtmates.users.control.repository.RoleRepository;
 import io.devandre.furtmates.users.entity.Role;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +21,17 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public void saveRole(Role role) {
-        log.info("Saving role with name: {}", role.getName());
+    public void saveRole(RoleRequest role) {
+        log.info("Saving role with name: {}", role.name());
 
         // The role exists in the database
-        if (roleRepository.existsRoleById(role.getId())) {
-            log.error("Role already exists with id: {}", role.getId());
+        if (roleRepository.existsRoleByName(role.name())) {
+            log.error("Role already exists with name: {}", role.name());
             return;
         }
-        roleRepository.saveRole(role);
+
+        // Map the request to the entity
+        roleRepository.saveRole(role.toEntity());
     }
 
     public Role findRoleById(Long id) {

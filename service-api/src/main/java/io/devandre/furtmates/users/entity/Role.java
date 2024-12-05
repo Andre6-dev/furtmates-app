@@ -1,5 +1,7 @@
 package io.devandre.furtmates.users.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -22,4 +24,7 @@ public class Role {
         this.name = name;
     }
 
+    public Role(@NotNull @NotBlank String name) {
+        this.name = name;
+    }
 }
