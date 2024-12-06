@@ -38,6 +38,11 @@ public class SpringDataRoleRepository implements RoleRepository {
     }
 
     @Override
+    public List<Role> findRolesByUserId(Long userId) {
+        return jdbcRoleRepository.findRolesByUserId(userId);
+    }
+
+    @Override
     public List<Role> findAllRoles() {
         return jdbcRoleRepository.findAll();
     }

@@ -14,6 +14,8 @@ public interface RoleRepository {
 
     Role findRoleById(Long id);
 
+    List<Role> findRolesByUserId(Long userId);
+
     List<Role> findAllRoles();
 
     void deleteRoleById(Long id);

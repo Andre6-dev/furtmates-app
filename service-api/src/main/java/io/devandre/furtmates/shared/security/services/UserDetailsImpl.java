@@ -27,14 +27,21 @@ public class UserDetailsImpl implements UserDetails {
     private final Collection<? extends GrantedAuthority> authorities;
     private final boolean isEnabled;
 
-    public UserDetailsImpl(User user, Role role) {
+    public UserDetailsImpl(User user, List<Role> role) {
         this.id = user.getId();
         this.publicId = user.getPublicId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.password = user.getPasswordHash();
-        this.authorities = Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
+        // Get all roles by userId
+        this.authorities = getAuthorities(role);
         this.isEnabled = user.getIsEnabled();
+    }
+
+    private List<SimpleGrantedAuthority> getAuthorities(List<Role> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .toList();
     }
 
     // Map roles to authorities
@@ -51,7 +58,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
