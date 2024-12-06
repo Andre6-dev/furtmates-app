@@ -10,6 +10,10 @@ public interface UserRepository {
 
     void saveUser(User user);
 
+    User getUserByEmail(String email);
+
+    User getUserByUsername(String username);
+
     boolean existsUserByEmail(String email);
 
     UserResponse getUserByPublicId(UUID publicId);

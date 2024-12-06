@@ -48,4 +48,5 @@ public interface JdbcUserRepository extends ListCrudRepository<User, Long>, Pagi
     @Query("DELETE FROM users WHERE public_id = :publicId")
     void deleteByPublicId(UUID publicId);
 
+    Optional<User> findByUsername(String username);
 }

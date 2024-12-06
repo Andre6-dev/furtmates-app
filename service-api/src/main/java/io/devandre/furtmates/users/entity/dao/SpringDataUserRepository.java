@@ -31,6 +31,18 @@ public class SpringDataUserRepository implements UserRepository {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return jdbcUserRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return jdbcUserRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+
+    @Override
     public boolean existsUserByEmail(String email) {
         return jdbcUserRepository.existsByEmail(email);
     }
