@@ -2,6 +2,8 @@ package io.devandre.furtmates.users.control.repository;
 
 import io.devandre.furtmates.users.boundary.response.UserResponse;
 import io.devandre.furtmates.users.entity.User;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -12,7 +14,9 @@ public interface UserRepository {
 
     User getUserByEmail(String email);
 
-    User getUserByUsername(String username);
+    User getUserById(Long id);
+
+    Integer getIdByEmail(String email);
 
     boolean existsUserByEmail(String email);
 
@@ -40,4 +44,6 @@ public interface UserRepository {
     void deleteUserByPublicId(UUID publicId);
 
     Page<UserResponse> getUsers(Integer pageNo, Integer pageSize, String sortBy, String sortDirection);
+
+    boolean existsUserByDocumentNumber(@Size(max = 8) @NotNull String s);
 }

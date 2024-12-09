@@ -37,9 +37,14 @@ public class SpringDataUserRepository implements UserRepository {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return jdbcUserRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    public User getUserById(Long id) {
+        return jdbcUserRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+    }
+
+    @Override
+    public Integer getIdByEmail(String email) {
+        return jdbcUserRepository.getIdByEmail(email);
     }
 
     @Override
@@ -95,5 +100,10 @@ public class SpringDataUserRepository implements UserRepository {
 
         return jdbcUserRepository.findAll(pageable)
                 .map(userMapper::toUserResponse);
+    }
+
+    @Override
+    public boolean existsUserByDocumentNumber(String documentNumber) {
+        return jdbcUserRepository.existsByDocumentNumber(documentNumber);
     }
 }

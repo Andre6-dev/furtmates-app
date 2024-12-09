@@ -49,4 +49,9 @@ public interface JdbcUserRepository extends ListCrudRepository<User, Long>, Pagi
     void deleteByPublicId(UUID publicId);
 
     Optional<User> findByUsername(String username);
+
+    boolean existsByDocumentNumber(String documentNumber);
+
+    @Query("SELECT id FROM furtmates_schema.users WHERE email = :email")
+    Integer getIdByEmail(String email);
 }

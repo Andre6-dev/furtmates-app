@@ -1,6 +1,7 @@
 package io.devandre.furtmates.users.entity;
 
 import io.devandre.furtmates.shared.persistence.AbstractAuditingEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(schema = "furtmates_schema", name = "users")
+@Builder
 public class User extends AbstractAuditingEntity {
 
     @Id
@@ -34,6 +36,42 @@ public class User extends AbstractAuditingEntity {
     private String bio;
 
     public User() {}
+
+    public User(Long id,
+                UUID publicId,
+                String firstName,
+                String lastName,
+                String username,
+                String email,
+                String passwordHash,
+                String phoneNumber,
+                String address,
+                String documentNumber,
+                Integer roleId,
+                String avatarUrl,
+                Integer age,
+                String genre,
+                Boolean isEnabled,
+                Boolean isAdopter,
+                String bio) {
+        this.id = id;
+        this.publicId = publicId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.documentNumber = documentNumber;
+        this.roleId = roleId;
+        this.avatarUrl = avatarUrl;
+        this.age = age;
+        this.genre = genre;
+        this.isEnabled = isEnabled;
+        this.isAdopter = isAdopter;
+        this.bio = bio;
+    }
 
     public User(UUID publicId, String firstName, String lastName, String username, String email, String passwordHash, String phoneNumber, String address, String documentNumber, Integer roleId, String avatarUrl, Integer age, String genre, Boolean isEnabled, Boolean isAdopter, String bio) {
         this.publicId = publicId;

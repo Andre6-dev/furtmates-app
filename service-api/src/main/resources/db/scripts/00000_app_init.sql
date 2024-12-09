@@ -45,21 +45,26 @@ CREATE TABLE users
 
 CREATE TABLE tokens
 (
-    id         SERIAL PRIMARY KEY,
-    user_id    INT  NOT NULL,
-    token      TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id             SERIAL PRIMARY KEY,
+    user_id        INT         NOT NULL,
+    token_type     VARCHAR(50) NOT NULL,
+    token          TEXT        NOT NULL,
+    revoked        BOOLEAN,
+    expired        BOOLEAN,
+    expiration_date TIMESTAMP,
+    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE verification_code
 (
-    id         SERIAL PRIMARY KEY,
-    user_id    INT  NOT NULL,
-    code       TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id             SERIAL PRIMARY KEY,
+    user_id        INT          NOT NULL,
+    key            VARCHAR(255) NOT NULL,
+    expiration_date TIMESTAMP    NOT NULL,
+    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
@@ -136,9 +141,9 @@ CREATE TABLE pet_images
 CREATE TABLE adoptions
 (
     id            SERIAL PRIMARY KEY,
-    pet_id        INT             NOT NULL,
-    adopter_id    INT             NOT NULL,
-    adoption_date DATE            NOT NULL,
+    pet_id        INT         NOT NULL,
+    adopter_id    INT         NOT NULL,
+    adoption_date DATE        NOT NULL,
     status        VARCHAR(50) NOT NULL,
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
