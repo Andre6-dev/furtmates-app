@@ -26,7 +26,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
         jsr250Enabled = true
 )
 public class SecurityConfig {
-
+    
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
@@ -43,15 +43,25 @@ public class SecurityConfig {
         );
         //http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests)
-                        -> requests
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/csrf-token").permitAll()
-                        .requestMatchers("/api/v1/auth/public/**").permitAll()
-                        .requestMatchers("/oauth2/**").permitAll()
-                        .anyRequest().authenticated());
+                -> requests
+                .requestMatchers(
+                        "/api-docs/**",
+                        "/api-docs.yaml",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs/**",
+                        "/v3/api-docs.yaml",
+                        "/webjars/**"
+                ).permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/csrf-token").permitAll()
+                .requestMatchers("/api/v1/auth/public/**").permitAll()
+                .requestMatchers("/oauth2/**").permitAll()
+                .anyRequest().authenticated());
         http.exceptionHandling(exception
                 -> exception.authenticationEntryPoint(unauthorizedHandler));
-        http.addFilterBefore(authenticationJwtTokenFilter(),
+        http.addFilterBefore(
+                authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());

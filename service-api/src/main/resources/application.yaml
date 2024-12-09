@@ -75,7 +75,13 @@ springdoc:
     operations-sorter: method
     tags-sorter: alpha
     default-model-expand-depth: -1
+    disable-swagger-default-url: true
+    display-request-duration: true
   show-actuator: true
+
+  # Add these properties to ensure proper path handling
+  paths-to-match:
+    - /api/**
 
 secret:
   app:

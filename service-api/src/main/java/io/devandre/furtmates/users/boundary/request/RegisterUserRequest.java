@@ -9,10 +9,10 @@ public record RegisterUserRequest(
         @NotNull String lastName,
         @Email @NotNull String email,
         @Size(min = 5, max = 25) @NotNull String password,
-        @Size(max = 8) @NotNull String documentNumber,
+        @Size(max = 8, min = 8) @NotNull String documentNumber,
         String phoneNumber,
         String address,
         String genre,
-        Integer age,
+        @NotNull Integer age,
         String bio
 ) {}
