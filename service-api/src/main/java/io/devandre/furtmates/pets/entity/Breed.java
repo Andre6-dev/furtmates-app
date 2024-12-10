@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table(schema = "furtmates_schema", name = "users")
+@Table(schema = "furtmates_schema", name = "breeds")
 @Builder
 public class Breed extends AbstractAuditingEntity {
 

@@ -26,7 +26,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
         jsr250Enabled = true
 )
 public class SecurityConfig {
-    
+
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/csrf-token").permitAll()
                 .requestMatchers("/api/v1/auth/public/**").permitAll()
+                .requestMatchers("/api/v1/pets/**").permitAll()
                 .requestMatchers("/oauth2/**").permitAll()
                 .anyRequest().authenticated());
         http.exceptionHandling(exception
