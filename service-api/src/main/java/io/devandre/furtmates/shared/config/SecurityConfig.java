@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/public/**").permitAll()
                 .requestMatchers("/api/v1/pets/**").permitAll()
                 .requestMatchers("/oauth2/**").permitAll()
-                .anyRequest().authenticated());
+                .anyRequest().permitAll());
         http.exceptionHandling(exception
                 -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(
