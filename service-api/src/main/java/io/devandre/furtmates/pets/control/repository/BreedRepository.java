@@ -8,4 +8,6 @@ public interface BreedRepository {
 
     List<BreedResponse> getBreeds();
     List<BreedResponse> getBreedsBySpeciesId(Integer speciesId);
+
+    boolean existsBreedById(Integer integer);
 }

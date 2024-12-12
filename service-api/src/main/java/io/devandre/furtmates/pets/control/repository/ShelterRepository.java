@@ -16,4 +16,6 @@ public interface ShelterRepository {
     void updateShelter(Long id, UpdateShelterRequest shelter);
 
     void deleteShelter(Long id);
+
+    boolean existsShelterById(Integer integer);
 }

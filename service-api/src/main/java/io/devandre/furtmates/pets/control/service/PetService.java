@@ -1,6 +1,8 @@
 package io.devandre.furtmates.pets.control.service;
 
+import io.devandre.furtmates.pets.boundary.request.CreatePetRequest;
 import io.devandre.furtmates.pets.boundary.request.CreateShelterRequest;
+import io.devandre.furtmates.pets.boundary.request.UpdatePetRequest;
 import io.devandre.furtmates.pets.boundary.request.UpdateShelterRequest;
 import io.devandre.furtmates.pets.boundary.response.BreedResponse;
 import io.devandre.furtmates.pets.boundary.response.PetResponse;
@@ -10,7 +12,10 @@ import io.devandre.furtmates.pets.control.repository.BreedRepository;
 import io.devandre.furtmates.pets.control.repository.PetRepository;
 import io.devandre.furtmates.pets.control.repository.ShelterRepository;
 import io.devandre.furtmates.pets.control.repository.SpeciesRepository;
+import io.devandre.furtmates.pets.entity.enums.AgePet;
+import io.devandre.furtmates.pets.entity.enums.GenrePet;
 import io.devandre.furtmates.pets.entity.jdbc.PetFilter;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -82,6 +87,8 @@ public class PetService {
 
     public Page<PetResponse> findPets(PetFilter filter, int page, int pageSize, String... sort) {
         Pageable pageable = PageRequest.of(page, pageSize, createSort(sort));
+        log.info("Getting pets with filters: {}", filter);
+        log.info("Pageable: {}", pageable);
         return petRepository.getPetsWithFilters(filter, pageable);
     }
 
@@ -99,5 +106,86 @@ public class PetService {
             orders.add(new Sort.Order(direction, property));
         }
         return Sort.by(orders);
+    }
+
+    public PetResponse getPetById(Long id) {
+        log.info("Getting pet by id: {}", id);
+        return petRepository.getPetById(id);
+    }
+
+    @Transactional(readOnly = false)
+    public void createPet(CreatePetRequest createPetRequest) {
+        log.info("Creating pet: {}", createPetRequest);
+
+        // Validate if speciesId, breedId and shelterId exist
+        validatePetRequest(createPetRequest);
+
+        // validate the age request with the AgePet enum
+        if (!AgePet.isValidAge(createPetRequest.age())) {
+            throw new IllegalArgumentException("Age with value " + createPetRequest.age() + " doesn't exist");
+        }
+
+        // validate genre
+        if (!GenrePet.isValidGenre(createPetRequest.genre())) {
+            throw new IllegalArgumentException("Genre with value " + createPetRequest.genre() + " doesn't exist");
+        }
+
+        petRepository.createPet(createPetRequest);
+    }
+
+    private void validatePetRequest(Object petRequest) {
+        Integer speciesId;
+        Integer breedId;
+        Integer shelterId;
+
+        if (petRequest instanceof CreatePetRequest createPetRequest) {
+            speciesId = createPetRequest.speciesId();
+            breedId = createPetRequest.breedId();
+            shelterId = createPetRequest.shelterId();
+        } else if (petRequest instanceof UpdatePetRequest updatePetRequest) {
+            speciesId = updatePetRequest.speciesId();
+            breedId = updatePetRequest.breedId();
+            shelterId = updatePetRequest.shelterId();
+        } else {
+            throw new IllegalArgumentException("Invalid pet request type");
+        }
+
+        if (!speciesRepository.existsSpeciesById(speciesId)) {
+            throw new IllegalArgumentException("Species with id " + speciesId + " doesn't exist");
+        }
+
+        if (!breedRepository.existsBreedById(breedId)) {
+            throw new IllegalArgumentException("Breed with id " + breedId + " doesn't exist");
+        }
+
+        if (!shelterRepository.existsShelterById(shelterId)) {
+            throw new IllegalArgumentException("Shelter with id " + shelterId + " doesn't exist");
+        }
+    }
+
+    @Transactional(readOnly = false)
+    public void updatePet(Long id, UpdatePetRequest updatePetRequest) {
+        log.info("Updating pet with id: {}", id);
+
+        // Validate if speciesId, breedId and shelterId exist
+        validatePetRequest(updatePetRequest);
+
+        if (AgePet.isValidAge(updatePetRequest.age())) {
+            throw new IllegalArgumentException("Age with value " + updatePetRequest.age() + " doesn't exist");
+        }
+
+        petRepository.updatePet(id, updatePetRequest);
+    }
+
+    @Transactional(readOnly = false)
+    public void deletePet(Long id) {
+        log.info("Deleting pet with id: {}", id);
+        petRepository.deletePet(id);
+    }
+
+    @Transactional(readOnly = false)
+    public void adoptPet(Long id) {
+        log.info("Adopting pet with id: {}", id);
+        petRepository.adoptPet(id);
     }
 }

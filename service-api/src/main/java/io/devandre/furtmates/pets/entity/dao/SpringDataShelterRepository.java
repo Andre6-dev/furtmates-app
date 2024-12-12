@@ -40,4 +40,9 @@ public class SpringDataShelterRepository implements ShelterRepository {
     public void deleteShelter(Long id) {
         jdbcShelterRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsShelterById(Integer integer) {
+        return jdbcShelterRepository.existsById(Long.valueOf(integer));
+    }
 }

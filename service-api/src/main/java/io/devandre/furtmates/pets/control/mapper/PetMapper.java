@@ -1,5 +1,6 @@
 package io.devandre.furtmates.pets.control.mapper;
 
+import io.devandre.furtmates.pets.boundary.request.CreatePetRequest;
 import io.devandre.furtmates.pets.boundary.response.PetResponse;
 import io.devandre.furtmates.pets.entity.Pet;
 import org.mapstruct.Mapper;

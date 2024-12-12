@@ -62,6 +62,19 @@ public class ResponseApi<T> {
                 .setData(data);
     }
 
+    public static <T> ResponseApi<T> updated() {
+        return new ResponseApi<T>()
+                .setStatus(HttpStatus.OK)
+                .setMessage("Updated successfully");
+    }
+
+    public static <T> ResponseApi<T> updated(T data) {
+        return new ResponseApi<T>()
+                .setStatus(HttpStatus.OK)
+                .setMessage("Updated successfully")
+                .setData(data);
+    }
+
     public static ResponseApi<Void> deleted() {
         return new ResponseApi<Void>()
                 .setStatus(HttpStatus.NO_CONTENT)

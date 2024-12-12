@@ -28,4 +28,9 @@ public class SpringDataBreedRepository implements BreedRepository {
     public List<BreedResponse> getBreedsBySpeciesId(Integer speciesId) {
         return breedMapper.toBreedResponseList(jdbcBreedRepository.findBySpeciesId(speciesId));
     }
+
+    @Override
+    public boolean existsBreedById(Integer integer) {
+        return jdbcBreedRepository.existsById(Long.valueOf(integer));
+    }
 }

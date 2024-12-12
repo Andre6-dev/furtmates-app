@@ -1,6 +1,7 @@
 package io.devandre.furtmates.pets.entity;
 
 import io.devandre.furtmates.shared.persistence.AbstractAuditingEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(schema = "furtmates_schema", name = "pets")
+@Builder
 public class Pet extends AbstractAuditingEntity {
 
     @Id

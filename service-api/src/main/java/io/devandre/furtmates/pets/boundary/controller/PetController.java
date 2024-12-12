@@ -1,6 +1,8 @@
 package io.devandre.furtmates.pets.boundary.controller;
 
+import io.devandre.furtmates.pets.boundary.request.CreatePetRequest;
 import io.devandre.furtmates.pets.boundary.request.CreateShelterRequest;
+import io.devandre.furtmates.pets.boundary.request.UpdatePetRequest;
 import io.devandre.furtmates.pets.boundary.request.UpdateShelterRequest;
 import io.devandre.furtmates.pets.boundary.response.BreedResponse;
 import io.devandre.furtmates.pets.boundary.response.PetResponse;
@@ -91,5 +93,34 @@ public class PetController extends ResponseController {
         filter.setShelterId(shelterId);
 
         return withPagination(petService.findPets(filter, page, pageSize, sort));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseApi<PetResponse>> getPet(@PathVariable Long id) {
+        return ok(petService.getPetById(id));
+    }
+
+    @PostMapping()
+    public ResponseEntity<ResponseApi<Void>> createPet(@Valid @RequestBody CreatePetRequest createPetRequest) {
+        petService.createPet(createPetRequest);
+        return created();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseApi<Void>> updatePet(@PathVariable Long id, @Valid @RequestBody UpdatePetRequest updatePetRequest) {
+        petService.updatePet(id, updatePetRequest);
+        return updated();
+    }
+
+    @PutMapping("/{id}/adopt")
+    public ResponseEntity<ResponseApi<Void>> adoptPet(@PathVariable Long id) {
+        petService.adoptPet(id);
+        return updated();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseApi<Void>> deletePet(@PathVariable Long id) {
+        petService.deletePet(id);
+        return deleted();
     }
 }

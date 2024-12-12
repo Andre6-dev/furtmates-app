@@ -54,11 +54,11 @@ public class SecurityConfig {
                         "/webjars/**"
                 ).permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/csrf-token").permitAll()
+                .requestMatchers("/api/v1/csrf-token").permitAll()
                 .requestMatchers("/api/v1/auth/public/**").permitAll()
                 .requestMatchers("/api/v1/pets/**").permitAll()
                 .requestMatchers("/oauth2/**").permitAll()
-                .anyRequest().permitAll());
+                .anyRequest().authenticated());
         http.exceptionHandling(exception
                 -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(

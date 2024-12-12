@@ -24,6 +24,11 @@ public abstract class ResponseController {
         return ResponseEntity.status(201).body(ResponseApi.created(data));
     }
 
+    // For PUT requests to return void
+    protected ResponseEntity<ResponseApi<Void>> updated() {
+        return ResponseEntity.status(200).body(ResponseApi.updated());
+    }
+
     protected ResponseEntity<ResponseApi<Void>> deleted() {
         return ResponseEntity.status(204).body(ResponseApi.deleted());
     }
