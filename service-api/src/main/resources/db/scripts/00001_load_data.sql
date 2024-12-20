@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset devandre:add_users_dataxxxxx
+-- changeset devandre:add_users_data
 -- Insert 10 users with different roles and genders
 INSERT INTO users (public_id, first_name, last_name, username, email, password_hash, phone_number, address,
                    document_number, role_id, avatar_url, age, genre, is_enabled, is_adopter, bio)
